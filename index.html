@@ -1,0 +1,1294 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>孙宇博 - 生日快乐！</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=ZCOOL+QingKe+HuangYou&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #ff6b8b;
+            --secondary: #4d96ff;
+            --accent: #ffd166;
+            --light: #fff9f0;
+            --dark: #2a2d43;
+            --success: #06d6a0;
+            --shadow: rgba(0, 0, 0, 0.1);
+            --radius: 16px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background: linear-gradient(135deg, #fff9f0 0%, #ffe8e8 100%);
+            color: var(--dark);
+            min-height: 100vh;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .welcome-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            transition: opacity 0.8s ease;
+        }
+        
+        .welcome-content {
+            text-align: center;
+            color: white;
+            padding: 30px;
+            max-width: 800px;
+        }
+        
+        .welcome-title {
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 4.5rem;
+            margin-bottom: 20px;
+            text-shadow: 3px 3px 0 rgba(0, 0, 0, 0.2);
+        }
+        
+        .birthday-name {
+            font-size: 3.5rem;
+            color: var(--accent);
+            margin: 20px 0;
+            font-weight: bold;
+            text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.2);
+        }
+        
+        .welcome-text {
+            font-size: 1.4rem;
+            margin-bottom: 40px;
+            max-width: 600px;
+        }
+        
+        .start-btn {
+            background: var(--accent);
+            color: var(--dark);
+            border: none;
+            padding: 18px 50px;
+            font-size: 1.4rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+        
+        .start-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);
+        }
+        
+        header {
+            text-align: center;
+            padding: 40px 0 30px;
+        }
+        
+        .main-title {
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 3.5rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.4rem;
+            color: #666;
+            margin-bottom: 20px;
+        }
+        
+        .birthday-boy {
+            display: inline-block;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-size: 2.8rem;
+            font-weight: bold;
+            margin: 15px 0 30px;
+            padding: 5px 20px;
+            border-radius: 50px;
+            background-color: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 5px 15px var(--shadow);
+        }
+        
+        .progress-container {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto 40px;
+            background: white;
+            border-radius: var(--radius);
+            padding: 20px;
+            box-shadow: 0 10px 30px var(--shadow);
+        }
+        
+        .progress-title {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: var(--primary);
+            font-weight: bold;
+        }
+        
+        .progress-bar {
+            height: 12px;
+            background: #eee;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            width: 0%;
+            transition: width 0.5s ease;
+            border-radius: 6px;
+        }
+        
+        .progress-text {
+            text-align: right;
+            margin-top: 8px;
+            font-size: 0.9rem;
+            color: #777;
+        }
+        
+        .question-card {
+            background: white;
+            border-radius: var(--radius);
+            padding: 30px;
+            margin: 0 auto 30px;
+            max-width: 800px;
+            box-shadow: 0 10px 30px var(--shadow);
+            border-left: 8px solid var(--primary);
+            display: none;
+            animation: fadeInUp 0.5s ease;
+        }
+        
+        .question-card.active {
+            display: block;
+        }
+        
+        .question-number {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        
+        .question-text {
+            font-size: 1.5rem;
+            margin-bottom: 25px;
+            color: var(--dark);
+            line-height: 1.5;
+        }
+        
+        .options-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        @media (min-width: 768px) {
+            .options-container {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        
+        .option {
+            padding: 20px;
+            background: #f8f9ff;
+            border: 2px solid #e6e9ff;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .option:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(77, 150, 255, 0.1);
+            border-color: var(--secondary);
+        }
+        
+        .option.selected {
+            background: #eef4ff;
+            border-color: var(--secondary);
+            box-shadow: 0 5px 15px rgba(77, 150, 255, 0.2);
+        }
+        
+        .option-number {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            background: var(--secondary);
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            margin-right: 15px;
+            font-weight: bold;
+        }
+        
+        .next-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            display: block;
+            margin: 20px auto 0;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 107, 139, 0.3);
+        }
+        
+        .next-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 107, 139, 0.4);
+        }
+        
+        .next-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .results-summary {
+            background: white;
+            border-radius: var(--radius);
+            padding: 30px;
+            margin: 0 auto 30px;
+            max-width: 800px;
+            box-shadow: 0 10px 30px var(--shadow);
+            display: none;
+            animation: fadeInUp 0.5s ease;
+        }
+        
+        .results-summary.active {
+            display: block;
+        }
+        
+        .summary-title {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 25px;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        .result-item {
+            background: #f8f9ff;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 5px solid var(--secondary);
+        }
+        
+        .result-question {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: var(--dark);
+            font-weight: bold;
+        }
+        
+        .result-answer {
+            font-size: 1.1rem;
+            color: #555;
+        }
+        
+        .result-conclusion {
+            background: linear-gradient(to right, #ffefef, #f0f5ff);
+            border-radius: 12px;
+            padding: 25px;
+            margin-top: 30px;
+            text-align: center;
+            font-size: 1.3rem;
+            color: var(--dark);
+            border: 2px dashed var(--accent);
+        }
+        
+        .message-board {
+            background: white;
+            border-radius: var(--radius);
+            padding: 30px;
+            margin: 0 auto 30px;
+            max-width: 800px;
+            box-shadow: 0 10px 30px var(--shadow);
+            display: none;
+            animation: fadeInUp 0.5s ease;
+        }
+        
+        .message-board.active {
+            display: block;
+        }
+        
+        .message-title {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        .message-instruction {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        
+        .message-textarea {
+            width: 100%;
+            height: 200px;
+            padding: 20px;
+            border: 2px solid #e6e9ff;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            resize: none;
+            margin-bottom: 20px;
+            transition: border-color 0.3s;
+            font-family: 'Noto Sans SC', sans-serif;
+        }
+        
+        .message-textarea:focus {
+            outline: none;
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 3px rgba(77, 150, 255, 0.1);
+        }
+        
+        .private-toggle {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            font-size: 1.1rem;
+        }
+        
+        .private-toggle input {
+            margin-right: 10px;
+            width: 20px;
+            height: 20px;
+            accent-color: var(--primary);
+        }
+        
+        .submit-message-btn {
+            background: var(--success);
+            color: white;
+            border: none;
+            padding: 18px 50px;
+            font-size: 1.3rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            display: block;
+            margin: 0 auto;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(6, 214, 160, 0.3);
+        }
+        
+        .submit-message-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(6, 214, 160, 0.4);
+        }
+        
+        .blessing-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.9);
+            background: white;
+            border-radius: var(--radius);
+            padding: 40px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s ease;
+            text-align: center;
+        }
+        
+        .blessing-popup.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translate(-50%, -50%) scale(1);
+        }
+        
+        .blessing-title {
+            font-size: 2.2rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        
+        .blessing-content {
+            font-size: 1.2rem;
+            color: #555;
+            margin-bottom: 30px;
+            line-height: 1.7;
+        }
+        
+        .blessing-close {
+            background: var(--secondary);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .blessing-close:hover {
+            background: var(--primary);
+        }
+        
+        .celebration-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 3000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.8s ease;
+        }
+        
+        .celebration-screen.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .celebration-content {
+            text-align: center;
+            color: white;
+            padding: 30px;
+            max-width: 900px;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .celebration-title {
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 5rem;
+            margin-bottom: 30px;
+            text-shadow: 4px 4px 0 rgba(0, 0, 0, 0.2);
+            animation: pulse 2s infinite;
+        }
+        
+        .celebration-message {
+            font-size: 1.8rem;
+            margin-bottom: 40px;
+            line-height: 1.7;
+            max-width: 700px;
+        }
+        
+        .qh-contact {
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin: 30px 0;
+            font-weight: bold;
+            text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.2);
+            animation: float 3s ease-in-out infinite;
+            display: none;
+        }
+        
+        .qh-contact.active {
+            display: block;
+        }
+        
+        .cake-container {
+            position: relative;
+            margin: 40px auto;
+            width: 300px;
+            height: 280px;
+        }
+        
+        .cake {
+            position: absolute;
+            width: 220px;
+            height: 90px;
+            background: #ffd166;
+            border-radius: 10px 10px 0 0;
+            left: 40px;
+            bottom: 0;
+            box-shadow: 
+                inset 0 -10px 0 rgba(0, 0, 0, 0.1),
+                0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .cake-middle {
+            position: absolute;
+            width: 240px;
+            height: 40px;
+            background: #ff6b8b;
+            border-radius: 10px 10px 0 0;
+            left: 30px;
+            bottom: 90px;
+            box-shadow: 
+                inset 0 -8px 0 rgba(0, 0, 0, 0.1),
+                0 3px 10px rgba(0, 0, 0, 0.15);
+        }
+        
+        .cake-top {
+            position: absolute;
+            width: 260px;
+            height: 30px;
+            background: #4d96ff;
+            border-radius: 10px 10px 0 0;
+            left: 20px;
+            bottom: 130px;
+            box-shadow: 
+                inset 0 -5px 0 rgba(0, 0, 0, 0.1),
+                0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .cake-dot {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background: white;
+            border-radius: 50%;
+        }
+        
+        .candle-container {
+            position: absolute;
+            top: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 5;
+        }
+        
+        .candle {
+            position: relative;
+            width: 15px;
+            height: 70px;
+            background: linear-gradient(to bottom, white 0%, #f0f0f0 100%);
+            border-radius: 7.5px;
+            margin: 0 auto;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+        
+        .candle-wick {
+            position: absolute;
+            width: 3px;
+            height: 10px;
+            background: #333;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .flame {
+            position: absolute;
+            width: 25px;
+            height: 40px;
+            background: radial-gradient(ellipse at center, #ff8a00, #ffd166 70%, transparent);
+            border-radius: 50% 50% 20% 20%;
+            top: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: flicker 0.8s infinite alternate;
+            z-index: 6;
+            box-shadow: 0 0 20px rgba(255, 209, 102, 0.8);
+        }
+        
+        .flame.blown {
+            animation: none;
+            opacity: 0;
+            transform: translateX(-50%) scale(0.5);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        
+        .blow-btn {
+            background: var(--accent);
+            color: var(--dark);
+            border: none;
+            padding: 20px 60px;
+            font-size: 1.5rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 40px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .blow-btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+        }
+        
+        .countdown-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 4000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .countdown-container.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .countdown-number {
+            font-family: 'ZCOOL QingKe HuangYou', sans-serif;
+            font-size: 20rem;
+            color: var(--accent);
+            text-shadow: 0 0 30px rgba(255, 209, 102, 0.8);
+            animation: pulse 1s infinite;
+        }
+        
+        .music-control {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 100;
+            background: white;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border: none;
+            transition: all 0.3s ease;
+        }
+        
+        .music-control:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .music-control i {
+            font-size: 1.8rem;
+            color: var(--primary);
+        }
+        
+        .petal {
+            position: fixed;
+            top: -20px;
+            width: 20px;
+            height: 20px;
+            background: linear-gradient(to right, #ff6b8b, #ff8e53);
+            border-radius: 50% 0 50% 50%;
+            opacity: 0.8;
+            z-index: 1;
+            pointer-events: none;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        @keyframes flicker {
+            0% { 
+                transform: translateX(-50%) scale(1) rotate(-5deg); 
+                opacity: 0.9; 
+            }
+            100% { 
+                transform: translateX(-50%) scale(1.1) rotate(5deg); 
+                opacity: 1; 
+            }
+        }
+        
+        @keyframes countdownPulse {
+            0% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(1.5); opacity: 0; }
+        }
+        
+        @media (max-width: 768px) {
+            .welcome-title, .celebration-title {
+                font-size: 3rem;
+            }
+            
+            .birthday-name {
+                font-size: 2.5rem;
+            }
+            
+            .main-title {
+                font-size: 2.5rem;
+            }
+            
+            .birthday-boy {
+                font-size: 2rem;
+            }
+            
+            .qh-contact {
+                font-size: 1.8rem;
+            }
+            
+            .countdown-number {
+                font-size: 12rem;
+            }
+            
+            .cake-container {
+                width: 250px;
+                height: 230px;
+            }
+            
+            .cake {
+                width: 180px;
+                height: 70px;
+                left: 35px;
+            }
+            
+            .cake-middle {
+                width: 200px;
+                height: 35px;
+                left: 25px;
+                bottom: 70px;
+            }
+            
+            .cake-top {
+                width: 220px;
+                height: 25px;
+                left: 15px;
+                bottom: 105px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="welcome-screen" id="welcomeScreen">
+        <div class="welcome-content">
+            <h1 class="welcome-title">生日快乐</h1>
+            <div class="birthday-name">孙宇博</div>
+            <p class="welcome-text">亲爱的孙宇博，这是一份专为你准备的生日惊喜！<br>接下来有几个有趣的问题要问你，准备好了吗？</p>
+            <button class="start-btn" id="startBtn">
+                <i class="fas fa-gift" style="margin-right: 10px;"></i>开启生日惊喜
+            </button>
+        </div>
+    </div>
+
+    <div class="countdown-container" id="countdownContainer">
+        <div class="countdown-number" id="countdownNumber">3</div>
+    </div>
+
+    <div class="container" id="mainContainer" style="display: none;">
+        <header>
+            <h1 class="main-title">孙宇博生日特辑</h1>
+            <p class="subtitle">一份属于你的特别生日问卷</p>
+            <div class="birthday-boy">🎉 孙宇博 🎂</div>
+        </header>
+
+        <div class="progress-container">
+            <div class="progress-title">生日进度</div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="progress-text" id="progressText">0/8 完成</div>
+        </div>
+
+        <div class="question-card active" id="question1">
+            <div class="question-number">1</div>
+            <h2 class="question-text">第一个问题：爱兄弟还是爱黄金？</h2>
+            <div class="options-container">
+                <div class="option" data-option="1">
+                    <div class="option-number">1</div>
+                    <div class="option-text">爱兄弟！兄弟如手足！</div>
+                </div>
+                <div class="option" data-option="2">
+                    <div class="option-number">2</div>
+                    <div class="option-text">爱黄金！黄金才是硬道理！</div>
+                </div>
+            </div>
+            <button class="next-btn" id="nextBtn1" disabled>下一题</button>
+        </div>
+
+        <div class="question-card" id="question2">
+            <div class="question-number">2</div>
+            <h2 class="question-text">第二个问题：你认为我们班的同学们怎么样？</h2>
+            <div class="options-container">
+                <div class="option" data-option="1">
+                    <div class="option-number">1</div>
+                    <div class="option-text">善良可爱大方、团结友爱、才华横溢</div>
+                </div>
+                <div class="option" data-option="2">
+                    <div class="option-number">2</div>
+                    <div class="option-text">没实力，还有待提高</div>
+                </div>
+            </div>
+            <button class="next-btn" id="nextBtn2" disabled>下一题</button>
+        </div>
+
+        <div class="question-card" id="question3">
+            <div class="question-number">3</div>
+            <h2 class="question-text">第三个问题：如果遇到喜欢的女生，你会？</h2>
+            <div class="options-container">
+                <div class="option" data-option="1">
+                    <div class="option-number">1</div>
+                    <div class="option-text">大胆追求，勇敢表白！</div>
+                </div>
+                <div class="option" data-option="2">
+                    <div class="option-number">2</div>
+                    <div class="option-text">默默关注，等待时机</div>
+                </div>
+            </div>
+            <button class="next-btn" id="nextBtn3" disabled>下一题</button>
+        </div>
+
+        <div class="question-card" id="question4">
+            <div class="question-number">4</div>
+            <h2 class="question-text">第四个问题：生日最想要什么礼物？</h2>
+            <div class="options-container">
+                <div class="option" data-option="1">
+                    <div class="option-number">1</div>
+                    <div class="option-text">朋友的真心祝福和陪伴</div>
+                </div>
+                <div class="option" data-option="2">
+                    <div class="option-number">2</div>
+                    <div class="option-text">实用又昂贵的电子产品</div>
+                </div>
+            </div>
+            <button class="next-btn" id="nextBtn4" disabled>下一题</button>
+        </div>
+
+        <div class="question-card" id="question5">
+            <div class="question-number">5</div>
+            <h2 class="question-text">第五个问题：你认为自己最大的优点是什么？</h2>
+            <div class="options-container">
+                <div class="option" data-option="1">
+                    <div class="option-number">1</div>
+                    <div class="option-text">幽默风趣，能活跃气氛</div>
+                </div>
+                <div class="option" data-option="2">
+                    <div class="option-number">2</div>
+                    <div class="option-text">认真负责，做事靠谱</div>
+                </div>
+            </div>
+            <button class="next-btn" id="nextBtn5" disabled>下一题</button>
+        </div>
+
+        <div class="question-card" id="question6">
+            <div class="question-number">6</div>
+            <h2 class="question-text">第六个问题：新的一岁最想实现的目标？</h2>
+            <div class="options-container">
+                <div class="option" data-option="1">
+                    <div class="option-number">1</div>
+                    <div class="option-text">学业进步，成绩优异</div>
+                </div>
+                <div class="option" data-option="2">
+                    <div class="option-number">2</div>
+                    <div class="option-text">找到真爱，脱单成功</div>
+                </div>
+            </div>
+            <button class="next-btn" id="nextBtn6" disabled>下一题</button>
+        </div>
+
+        <div class="question-card" id="question7">
+            <div class="question-number">7</div>
+            <h2 class="question-text">第七个问题：如果中彩票100万，你会？</h2>
+            <div class="options-container">
+                <div class="option" data-option="1">
+                    <div class="option-number">1</div>
+                    <div class="option-text">请全班同学吃大餐，一起分享</div>
+                </div>
+                <div class="option" data-option="2">
+                    <div class="option-number">2</div>
+                    <div class="option-text">自己存起来，慢慢花</div>
+                </div>
+            </div>
+            <button class="next-btn" id="nextBtn7" disabled>查看答案</button>
+        </div>
+
+        <div class="results-summary" id="resultsSummary">
+            <h2 class="summary-title">你的选择结果</h2>
+            <div class="result-item">
+                <div class="result-question">1. 爱兄弟还是爱黄金？</div>
+                <div class="result-answer" id="answer1">等待选择...</div>
+            </div>
+            <div class="result-item">
+                <div class="result-question">2. 你认为我们班的同学们怎么样？</div>
+                <div class="result-answer" id="answer2">等待选择...</div>
+            </div>
+            <div class="result-item">
+                <div class="result-question">3. 如果遇到喜欢的女生，你会？</div>
+                <div class="result-answer" id="answer3">等待选择...</div>
+            </div>
+            <div class="result-item">
+                <div class="result-question">4. 生日最想要什么礼物？</div>
+                <div class="result-answer" id="answer4">等待选择...</div>
+            </div>
+            <div class="result-item">
+                <div class="result-question">5. 你认为自己最大的优点是什么？</div>
+                <div class="result-answer" id="answer5">等待选择...</div>
+            </div>
+            <div class="result-item">
+                <div class="result-question">6. 新的一岁最想实现的目标？</div>
+                <div class="result-answer" id="answer6">等待选择...</div>
+            </div>
+            <div class="result-item">
+                <div class="result-question">7. 如果中彩票100万，你会？</div>
+                <div class="result-answer" id="answer7">等待选择...</div>
+            </div>
+            <div class="result-conclusion" id="resultConclusion">
+                根据你的选择，我们发现...（等待生成结论）
+            </div>
+            <button class="next-btn" id="toMessageBtn">去留言板</button>
+        </div>
+
+        <div class="message-board" id="messageBoard">
+            <h2 class="message-title">生日留言板</h2>
+            <p class="message-instruction">新的一岁，有什么想对自己说的吗？写下你的生日寄语吧！</p>
+            <textarea class="message-textarea" id="messageText" placeholder="亲爱的孙宇博，新的一岁，我希望..."></textarea>
+            <div class="private-toggle">
+                <input type="checkbox" id="privateCheck" checked>
+                <label for="privateCheck">仅自己可见（但作为开发者我能看到所有留言）</label>
+            </div>
+            <button class="submit-message-btn" id="submitMessageBtn">提交留言，点燃蜡烛！</button>
+        </div>
+    </div>
+
+    <div class="blessing-popup" id="blessingPopup1">
+        <h3 class="blessing-title">🎂 生日快乐 🎂</h3>
+        <div class="blessing-content">
+            孙宇博，愿你的新一岁充满欢笑与惊喜！<br>
+            每一天都比昨天更加精彩！
+        </div>
+        <button class="blessing-close" id="closeBlessing1">继续</button>
+    </div>
+
+    <div class="blessing-popup" id="blessingPopup2">
+        <h3 class="blessing-title">✨ 心想事成 ✨</h3>
+        <div class="blessing-content">
+            愿你的所有愿望都能实现，<br>
+            所有的努力都有回报！
+        </div>
+        <button class="blessing-close" id="closeBlessing2">继续</button>
+    </div>
+
+    <div class="blessing-popup" id="blessingPopup3">
+        <h3 class="blessing-title">🏆 成就非凡 🏆</h3>
+        <div class="blessing-content">
+            新的一岁，愿你学业进步，<br>
+            在各个方面都取得辉煌成就！
+        </div>
+        <button class="blessing-close" id="closeBlessing3">继续</button>
+    </div>
+
+    <div class="celebration-screen" id="celebrationScreen">
+        <div class="celebration-content">
+            <h1 class="celebration-title">生日快乐！</h1>
+            <p class="celebration-message">
+                孙宇博，恭喜你完成了所有生日挑战！<br>
+                现在，请收下这份特别的生日祝福！
+            </p>
+
+            <div class="qh-contact" id="qhContact">
+                联系 QH 领取专属生日奖励！
+            </div>
+
+            <div class="cake-container">
+                <div class="cake"></div>
+                <div class="cake-middle"></div>
+                <div class="cake-top"></div>
+                <div class="candle-container">
+                    <div class="candle">
+                        <div class="candle-wick"></div>
+                    </div>
+                    <div class="flame" id="candleFlame"></div>
+                </div>
+                <div class="cake-dot" style="top: 50px; left: 50px;"></div>
+                <div class="cake-dot" style="top: 60px; left: 100px;"></div>
+                <div class="cake-dot" style="top: 40px; left: 150px;"></div>
+                <div class="cake-dot" style="top: 70px; left: 180px;"></div>
+                <div class="cake-dot" style="top: 80px; left: 80px;"></div>
+                <div class="cake-dot" style="top: 90px; left: 130px;"></div>
+            </div>
+
+            <button class="blow-btn" id="blowBtn">
+                <i class="fas fa-wind" style="margin-right: 10px;"></i>吹灭蜡烛，许下心愿
+            </button>
+        </div>
+    </div>
+
+    <button class="music-control" id="musicControl">
+        <i class="fas fa-music"></i>
+    </button>
+
+    <audio id="birthdayAudio" preload="auto">
+        <source src="https://assets.mixkit.co/music/preview/mixkit-happy-birthday-to-you-443.mp3" type="audio/mpeg">
+    
+    <audio id="countdownAudio" preload="auto">
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-simple-countdown-922.mp3" type="audio/mpeg">
+    
+    <audio id="blowAudio" preload="auto">
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-candle-blow-737.mp3" type="audio/mpeg">
+    
+    <audio id="celebrationAudio" preload="auto">
+        <source src="https://assets.mixkit.co/music/preview/mixkit-achievement-bell-600.mp3" type="audio/mpeg">
+    
+
+    <script>
+        let currentQuestion = 1;
+        let answers = {
+            question1: null,
+            question2: null,
+            question3: null,
+            question4: null,
+            question5: null,
+            question6: null,
+            question7: null
+        };
+
+        const resultMap = {
+            question1: {
+                1: "你选择了：爱兄弟！兄弟你好像越来越帅了！生日快乐！",
+                2: "你选择了：爱黄金！厕所里有你要的东西...（开个玩笑，生日快乐！）"
+            },
+            question2: {
+                1: "你选择了：善良可爱大方、团结友爱、才华横溢！<br>孙宇博也是这样善良可爱大方、团结友爱、才华横溢！",
+                2: "你选择了：没实力，还有待提高。<br>孙宇博爱装逼心里还没数？才不是！他其实很有实力！"
+            },
+            question3: {
+                1: "你选择了：大胆追求，勇敢表白！<br>孙宇博就是这样一个勇敢直接的人！",
+                2: "你选择了：默默关注，等待时机。<br>孙宇博其实内心细腻，懂得观察时机！"
+            },
+            question4: {
+                1: "你选择了：朋友的真心祝福和陪伴。<br>孙宇博最珍惜的就是朋友间的真挚情谊！",
+                2: "你选择了：实用又昂贵的电子产品。<br>孙宇博也是懂得享受科技乐趣的人！"
+            },
+            question5: {
+                1: "你选择了：幽默风趣，能活跃气氛。<br>孙宇博确实是我们班的开心果！",
+                2: "你选择了：认真负责，做事靠谱。<br>孙宇博做事确实让人放心！"
+            },
+            question6: {
+                1: "你选择了：学业进步，成绩优异。<br>孙宇博在新的一岁一定会学业有成！",
+                2: "你选择了：找到真爱，脱单成功。<br>孙宇博这么优秀，一定会找到真爱！"
+            },
+            question7: {
+                1: "你选择了：请全班同学吃大餐，一起分享。<br>孙宇博就是这样一个大方慷慨的人！",
+                2: "你选择了：自己存起来，慢慢花。<br>孙宇博懂得理财，有长远规划！"
+            }
+        };
+
+        const conclusionMap = {
+            "1-1-1-1-1-1-1": "你是一个重情重义、勇敢追爱、重视友谊、幽默风趣、积极进取、慷慨大方的人！孙宇博和你一样优秀！",
+            "2-2-2-2-2-2-2": "你是一个务实、有主见、细心观察、懂得享受、认真负责、目标明确、会规划未来的人！孙宇博也具备这些优点！",
+            "default": "你是独一无二的，孙宇博也是！你的每一个选择都展现了真实的自己，祝你生日快乐！"
+        };
+
+        const welcomeScreen = document.getElementById('welcomeScreen');
+        const countdownContainer = document.getElementById('countdownContainer');
+        const countdownNumber = document.getElementById('countdownNumber');
+        const mainContainer = document.getElementById('mainContainer');
+        const startBtn = document.getElementById('startBtn');
+        const progressFill = document.getElementById('progressFill');
+        const progressText = document.getElementById('progressText');
+
+        const questionCards = [
+            document.getElementById('question1'),
+            document.getElementById('question2'),
+            document.getElementById('question3'),
+            document.getElementById('question4'),
+            document.getElementById('question5'),
+            document.getElementById('question6'),
+            document.getElementById('question7')
+        ];
+
+        const nextBtns = [
+            document.getElementById('nextBtn1'),
+            document.getElementById('nextBtn2'),
+            document.getElementById('nextBtn3'),
+            document.getElementById('nextBtn4'),
+            document.getElementById('nextBtn5'),
+            document.getElementById('nextBtn6'),
+            document.getElementById('nextBtn7')
+        ];
+
+        const resultsSummary = document.getElementById('resultsSummary');
+        const answerElements = [
+            document.getElementById('answer1'),
+            document.getElementById('answer2'),
+            document.getElementById('answer3'),
+            document.getElementById('answer4'),
+            document.getElementById('answer5'),
+            document.getElementById('answer6'),
+            document.getElementById('answer7')
+        ];
+
+        const resultConclusion = document.getElementById('resultConclusion');
+        const toMessageBtn = document.getElementById('toMessageBtn');
+        const messageBoard = document.getElementById('messageBoard');
+        const submitMessageBtn = document.getElementById('submitMessageBtn');
+
+        const blessingPopup1 = document.getElementById('blessingPopup1');
+        const blessingPopup2 = document.getElementById('blessingPopup2');
+        const blessingPopup3 = document.getElementById('blessingPopup3');
+        const closeBlessing1 = document.getElementById('closeBlessing1');
+        const closeBlessing2 = document.getElementById('closeBlessing2');
+        const closeBlessing3 = document.getElementById('closeBlessing3');
+
+        const celebrationScreen = document.getElementById('celebrationScreen');
+        const qhContact = document.getElementById('qhContact');
+        const candleFlame = document.getElementById('candleFlame');
+        const blowBtn = document.getElementById('blowBtn');
+
+        const musicControl = document.getElementById('musicControl');
+        const birthdayAudio = document.getElementById('birthdayAudio');
+        const countdownAudio = document.getElementById('countdownAudio');
+        const blowAudio = document.getElementById('blowAudio');
+        const celebrationAudio = document.getElementById('celebrationAudio');
+
+        let isMusicPlaying = false;
+        let hasUserInteracted = false;
+
+        startBtn.addEventListener('click', function() {
+            hasUserInteracted = true;
+            startCountdown();
+        });
+
+        function startCountdown() {
+            countdownContainer.classList.add('active');
+            let count = 3;
+            countdownNumber.textContent = count;
+
+            const countdownInterval = setInterval(() => {
+                count--;
+                if (count > 0) {
+                    countdownNumber.textContent = count;
+                } else {
+                    countdownNumber.textContent = "开始！";
+                    clearInterval(countdownInterval);
+                    setTimeout(() => {
+                        countdownContainer.classList.remove('active');
+                        welcomeScreen.style.opacity = '0';
+                        setTimeout(() => {
+                            welcomeScreen.style.display = 'none';
+                            mainContainer.style.display = 'block';
+                            createPetals();
+                        }, 500);
+                    }, 1000);
+                }
+            }, 1000);
+        }
+
+        document.querySelectorAll('.option').forEach(option => {
+            option.addEventListener('click', function() {
+                const questionCard = this.closest('.question-card');
+                const questionId = questionCard.id;
+                const optionValue = this.getAttribute('data-option');
+                questionCard.querySelectorAll('.option').forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+                this.classList.add('selected');
+                const questionIndex = parseInt(questionId.replace('question', '')) - 1;
+                answers[`question${questionIndex + 1}`] = optionValue;
+                nextBtns[questionIndex].disabled = false;
+                updateProgress();
+            });
+        });
+
+        nextBtns.forEach((btn, index) => {
+            btn.addEventListener('click', function() {
+                questionCards[index].classList.remove('active');
+                if (index === questionCards.length - 1) {
+                    for (let i = 0; i < answerElements.length; i++) {
+                        const answerKey = `question${i + 1}`;
+                        if (answers[answerKey]) {
+                            answerElements[i].innerHTML = resultMap[answerKey][answers[answerKey]];
+                        }
+                    }
+                    const conclusionKey = Object.values(answers).join('-');
+                    resultConclusion.textContent = conclusionMap[conclusionKey] || conclusionMap["default"];
+                    resultsSummary.classList.add('active');
+                } else {
+                    questionCards[index + 1].classList.add('active');
+                    currentQuestion = index + 2;
+                }
+                updateProgress();
+            });
+        });
+
+        toMessageBtn.addEventListener('click', function() {
+            resultsSummary.classList.remove('active');
+            messageBoard.classList.add('active');
+            updateProgress();
+        });
+
+        submitMessageBtn.addEventListener('click', function() {
+            blessingPopup1.classList.add('active');
+        });
+
+        closeBlessing1.addEventListener('click', function() {
+            blessingPopup1.classList.remove('active');
+            setTimeout(() => {
+                blessingPopup2.classList.add('active');
+            }, 300);
+        });
+
+        closeBlessing2.addEventListener('click', function() {
+            blessingPopup2.classList.remove('active');
+            setTimeout(() => {
+                blessingPopup3.classList.add
